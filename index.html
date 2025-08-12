@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruleta del Amor 💘</title>
+  <style>
+    :root {
+      --pink: #ffc1cc;
+      --peach: #ffd9b3;
+      --mint: #d0f0c0;
+      --lilac: #e6ccff;
+      --cream: #fff5e1;
+      --yellow: #ffffcc;
+      --coral: #ff9999;
+      --sky: #99ccff;
+      --lavender: #ccccff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Comic Sans MS';
+      background: #ffe4ec;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .contenedor-juego {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 100vw;
+      min-height: 80vh; /* Reservar espacio para el mensaje */
+    }
+
+    h1 {
+      font-size: 5vmin;
+      color: #ff4d94;
+      font-family: 'Comic Sans Ms';
+      text-align: center;
+      margin-bottom: 3vmin;
+      text-shadow: 0 0 2vmin rgba(0, 0, 0, 0.2);
+    }
+
+    .ruleta-wrapper {
+      position: relative;
+      width: 80vmin;
+      height: 80vmin;
+      max-width: 400px;
+      max-height: 400px;
+      min-width: 250px;
+      min-height: 250px;
+      margin-bottom: 5vmin;
+      border-radius: 50%;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      will-change: transform;
+    }
+
+    .flecha {
+      width: 0;
+      height: 0;
+      border-left: 5vmin solid transparent;
+      border-right: 5vmin solid transparent;
+      border-bottom: 7.5vmin solid red;
+      position: absolute;
+      top: -1.25vmin;
+      left: 50%;
+      transform: translateX(-50%);
+      rotate: 60deg;
+      z-index: 20;
+    }
+
+    .ruleta-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2.5vmin solid var(--cream);
+      box-shadow: 0 0 6vmin rgba(0, 0, 0, 0.2);
+      transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    .ruleta-container.no-transition {
+      transition: none;
+    }
+
+    .sector {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0% 0%;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+      overflow: hidden;
+    }
+
+    .sector img {
+      position: absolute;
+      width: 80%;
+      height: 80%;
+      top: 30%;
+      left: 60%;
+      object-fit: contain;
+      z-index: 10;
+    }
+
+    .sector:nth-child(1) img {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    .sector:nth-child(2) img {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .sector:nth-child(3) img {
+      transform: translate(-50%, -50%) rotate(-90deg);
+    }
+
+    .sector:nth-child(4) img {
+      transform: translate(-50%, -50%) rotate(-135deg);
+    }
+
+    .sector:nth-child(5) img {
+      transform: translate(-50%, -50%) rotate(-180deg);
+    }
+
+    .sector:nth-child(6) img {
+      transform: translate(-50%, -50%) rotate(-225deg);
+    }
+
+    .sector:nth-child(7) img {
+      transform: translate(-50%, -50%) rotate(-270deg);
+    }
+
+    .sector:nth-child(8) img {
+      transform: translate(-50%, -50%) rotate(-315deg);
+    }
+
+    .sector:nth-child(1) {
+      transform: rotate(0deg);
+      background: var(--pink);
+    }
+
+    .sector:nth-child(2) {
+      transform: rotate(45deg);
+      background: var(--peach);
+    }
+
+    .sector:nth-child(3) {
+      transform: rotate(90deg);
+      background: var(--mint);
+    }
+
+    .sector:nth-child(4) {
+      transform: rotate(135deg);
+      background: var(--lilac);
+    }
+
+    .sector:nth-child(5) {
+      transform: rotate(180deg);
+      background: var(--yellow);
+    }
+
+    .sector:nth-child(6) {
+      transform: rotate(225deg);
+      background: var(--coral);
+    }
+
+    .sector:nth-child(7) {
+      transform: rotate(270deg);
+      background: var(--sky);
+    }
+
+    .sector:nth-child(8) {
+      transform: rotate(315deg);
+      background: var(--lavender);
+    }
+
+    button {
+      margin-top: 2vmin;
+      padding: 2vmin 4vmin;
+      font-size: 4vmin;
+      background-color: var(--mint);
+      border: none;
+      border-radius: 3vmin;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-family: 'Comic Sans MS';
+      color: #ff4d94;
+    }
+
+    button:hover {
+      background-color: var(--pink);
+    }
+
+    #imagenResultado {
+      max-width: 60vmin;
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 3vmin;
+      box-shadow: 0 0 4vmin rgba(0,0,0,0.3);
+      z-index: 30;
+    }
+
+    #imagenResultado.active {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    #mensajeResultado {
+      display: none;
+      position: absolute;
+      bottom: 5vmin;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 4vmin;
+      color: #ff0000;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .particle {
+      position: fixed;
+      width: 2vmin;
+      height: 2vmin;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 25;
+      animation: fall 2s linear forwards;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100vh); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    #botonReiniciarGanador {
+      display: none;
+      position: fixed;
+      top: calc(50% + 35vmin);
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 30;
+    }
+
+    /* Media Queries para pantallas pequeñas */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 4vmin;
+        margin-bottom: 2vmin;
+      }
+
+      .ruleta-wrapper {
+        width: 90vmin;
+        height: 90vmin;
+        min-width: 200px;
+        min-height: 200px;
+      }
+
+      .flecha {
+        border-left: 4vmin solid transparent;
+        border-right: 4vmin solid transparent;
+        border-bottom: 6vmin solid red;
+        top: -1vmin;
+      }
+
+      button {
+        padding: 2vmin 3vmin;
+        font-size: 3.5vmin;
+      }
+
+      #imagenResultado {
+        max-width: 50vmin;
+      }
+
+      #mensajeResultado {
+        font-size: 3.5vmin;
+        bottom: 3vmin;
+      }
+
+      .particle {
+        width: 1.5vmin;
+        height: 1.5vmin;
+      }
+
+      #botonReiniciarGanador {
+        top: calc(50% + 30vmin);
+      }
+    }
+
+    /* Media Queries para pantallas grandes */
+    @media (min-width: 1200px) {
+      .ruleta-wrapper {
+        max-width: 500px;
+        max-height: 500px;
+      }
+
+      h1 {
+        font-size: 6vmin;
+      }
+
+      #imagenResultado {
+        max-width: 70vmin;
+      }
+
+      #botonReiniciarGanador {
+        top: calc(50% + 40vmin);
+      }
+    }
+
+    /* Media Query para pantallas estrechas o de alta relación de aspecto */
+    @media (max-aspect-ratio: 1/2) {
+      .ruleta-wrapper {
+        width: 95vw;
+        height: 95vw;
+        min-width: 180px;
+        min-height: 180px;
+      }
+
+      .flecha {
+        border-left: 3.5vmin solid transparent;
+        border-right: 3.5vmin solid transparent;
+        border-bottom: 5.5vmin solid red;
+        top: -0.8vmin;
+      }
+
+      #mensajeResultado {
+        bottom: 2vmin;
+        font-size: 3vmin;
+      }
+    }
+
+    /* Media Query para pantallas de notebook (resoluciones típicas como 1366x768 o 1920x1080) */
+    @media (max-height: 800px) and (min-width: 1000px) {
+      .contenedor-juego {
+        min-height: 90vh;
+      }
+
+      .ruleta-wrapper {
+        width: 70vmin;
+        height: 70vmin;
+        max-width: 350px;
+        max-height: 350px;
+      }
+
+      #mensajeResultado {
+        bottom: 4vmin;
+        font-size: 3.5vmin;
+      }
+
+      button {
+        margin-top: 1vmin;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor-juego">
+    <h1 id="tituloRuleta">Girar para descubrir otra razón</h1>
+    <div class="ruleta-wrapper" id="ruletaWrapper">
+      <div class="flecha"></div>
+      <div class="ruleta-container" id="ruleta">
+        <div class="sector"><img src="ganador.png" alt="Ganador"></div>
+        <div class="sector"><img src="perdedor.png" alt="Perdedor"></div>
+        <div class="sector"><img src="ganador.png" alt="Ganador"></div>
+        <div class="sector"><img src="perdedor.png" alt="Perdedor"></div>
+        <div class="sector"><img src="ganador.png" alt="Ganador"></div>
+        <div class="sector"><img src="perdedor.png" alt="Perdedor"></div>
+        <div class="sector"><img src="ganador.png" alt="Ganador"></div>
+        <div class="sector"><img src="ganador.png" alt="Ganador"></div>
+      </div>
+    </div>
+    <button id="botonGirar" onclick="girarRuleta()">Girar</button>
+    <p id="mensajeResultado">No hay ninguna razón, volvé a girar</p>
+  </div>
+  <img id="imagenResultado" src="voz.png" alt="Ganaste" />
+  <button id="botonReiniciar" onclick="reiniciarJuego()" style="display:none;">Volver a jugar</button>
+  <button id="botonReiniciarGanador" onclick="reiniciarJuego()">Volver a jugar</button>
+  <audio id="sonidoCambio" src="spin.mp3"></audio>
+  <audio id="sonidoGanador" src="ganaste.mp3"></audio>
+
+  <script>
+    let anguloActual = 0;
+    let ruletaGirando = false;
+
+    function createParticles() {
+      const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.animationDelay = `${Math.random() * 1.5}s`;
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 2000);
+      }
+    }
+
+    function girarRuleta() {
+      if (ruletaGirando) return;
+
+      ruletaGirando = true;
+      document.getElementById("imagenResultado").style.display = "none";
+      document.getElementById("imagenResultado").classList.remove("active");
+      document.getElementById("mensajeResultado").style.display = "none";
+      document.getElementById("botonReiniciar").style.display = "none";
+      document.getElementById("botonReiniciarGanador").style.display = "none";
+      document.getElementById("botonGirar").style.display = "none";
+      document.getElementById("ruletaWrapper").style.display = "block";
+      document.getElementById("tituloRuleta").style.display = "block";
+
+      const ruleta = document.getElementById("ruleta");
+      ruleta.classList.add("no-transition");
+      ruleta.style.transform = `rotate(0deg)`;
+      anguloActual = 0;
+      ruleta.offsetHeight;
+      ruleta.classList.remove("no-transition");
+
+      const sonidoCambio = document.getElementById("sonidoCambio");
+      const sonidoGanador = document.getElementById("sonidoGanador");
+
+      sonidoCambio.loop = true;
+      sonidoCambio.currentTime = 0;
+      sonidoCambio.play();
+
+      const sectores = [
+        { imagen: "ganador.png", angulo: 0, esGanador: true },
+        { imagen: "perdedor.png", angulo: 45, esGanador: false },
+        { imagen: "ganador.png", angulo: 90, esGanador: true },
+        { imagen: "perdedor.png", angulo: 135, esGanador: false },
+        { imagen: "ganador.png", angulo: 180, esGanador: true },
+        { imagen: "perdedor.png", angulo: 225, esGanador: false },
+        { imagen: "ganador.png", angulo: 270, esGanador: true },
+        { imagen: "ganador.png", angulo: 315, esGanador: true }
+      ];
+
+      const sectorIndex = Math.floor(Math.random() * sectores.length);
+      const sectorSeleccionado = sectores[sectorIndex];
+      const vueltas = 4;
+      const nuevoAngulo = vueltas * 360 + sectorSeleccionado.angulo;
+      anguloActual = nuevoAngulo;
+
+      ruleta.style.transform = `rotate(${anguloActual}deg)`;
+
+      setTimeout(() => {
+        sonidoCambio.pause();
+        sonidoCambio.currentTime = 0;
+        if (sectorSeleccionado.esGanador) {
+          document.getElementById("ruletaWrapper").style.display = "none";
+          document.getElementById("tituloRuleta").style.display = "none";
+          document.getElementById("imagenResultado").style.display = "block";
+          document.getElementById("imagenResultado").classList.add("active");
+          document.getElementById("botonReiniciarGanador").style.display = "inline-block";
+          createParticles();
+          sonidoGanador.play();
+          document.getElementById("botonReiniciar").style.display = "inline-block";
+        } else {
+          document.getElementById("mensajeResultado").style.display = "block";
+          document.getElementById("botonGirar").style.display = "inline-block";
+          ruletaGirando = false;
+        }
+      }, 4000);
+    }
+
+    function reiniciarJuego() {
+      const ruleta = document.getElementById("ruleta");
+      document.getElementById("imagenResultado").style.display = "none";
+      document.getElementById("imagenResultado").classList.remove("active");
+      document.getElementById("mensajeResultado").style.display = "none";
+      document.getElementById("botonReiniciar").style.display = "none";
+      document.getElementById("botonReiniciarGanador").style.display = "none";
+      document.getElementById("botonGirar").style.display = "inline-block";
+      document.getElementById("ruletaWrapper").style.display = "block";
+      document.getElementById("tituloRuleta").style.display = "block";
+      ruletaGirando = false;
+      ruleta.classList.add("no-transition");
+      ruleta.style.transform = `rotate(0deg)`;
+      anguloActual = 0;
+      setTimeout(() => {
+        ruleta.classList.remove("no-transition");
+      }, 0);
+    }
+  </script>
+</body>
+</html>

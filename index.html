@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ruleta del Amor 💘</title>
+  <title>Ruleta de mi amor</title>
   <style>
     :root {
       --pink: #ffc1cc;
@@ -24,7 +24,7 @@
     }
 
     body {
-      font-family: 'Comic Sans MS';
+      font-family: 'Segoe UI', 'Arial', sans-serif;
       background: #ffe4ec;
       height: 100vh;
       display: flex;
@@ -42,13 +42,13 @@
       flex-shrink: 0;
       width: 100%;
       max-width: 100vw;
-      min-height: 80vh; /* Reservar espacio para el mensaje */
+      min-height: 80vh;
     }
 
     h1 {
       font-size: 5vmin;
       color: #ff4d94;
-      font-family: 'Comic Sans Ms';
+      font-family: 'Segoe UI', 'Arial', sans-serif;
       text-align: center;
       margin-bottom: 3vmin;
       text-shadow: 0 0 2vmin rgba(0, 0, 0, 0.2);
@@ -119,77 +119,23 @@
       z-index: 10;
     }
 
-    .sector:nth-child(1) img {
-      transform: translate(-50%, -50%) rotate(0deg);
-    }
+    .sector:nth-child(1) img { transform: translate(-50%, -50%) rotate(0deg); }
+    .sector:nth-child(2) img { transform: translate(-50%, -50%) rotate(-45deg); }
+    .sector:nth-child(3) img { transform: translate(-50%, -50%) rotate(-90deg); }
+    .sector:nth-child(4) img { transform: translate(-50%, -50%) rotate(-135deg); }
+    .sector:nth-child(5) img { transform: translate(-50%, -50%) rotate(-180deg); }
+    .sector:nth-child(6) img { transform: translate(-50%, -50%) rotate(-225deg); }
+    .sector:nth-child(7) img { transform: translate(-50%, -50%) rotate(-270deg); }
+    .sector:nth-child(8) img { transform: translate(-50%, -50%) rotate(-315deg); }
 
-    .sector:nth-child(2) img {
-      transform: translate(-50%, -50%) rotate(-45deg);
-    }
-
-    .sector:nth-child(3) img {
-      transform: translate(-50%, -50%) rotate(-90deg);
-    }
-
-    .sector:nth-child(4) img {
-      transform: translate(-50%, -50%) rotate(-135deg);
-    }
-
-    .sector:nth-child(5) img {
-      transform: translate(-50%, -50%) rotate(-180deg);
-    }
-
-    .sector:nth-child(6) img {
-      transform: translate(-50%, -50%) rotate(-225deg);
-    }
-
-    .sector:nth-child(7) img {
-      transform: translate(-50%, -50%) rotate(-270deg);
-    }
-
-    .sector:nth-child(8) img {
-      transform: translate(-50%, -50%) rotate(-315deg);
-    }
-
-    .sector:nth-child(1) {
-      transform: rotate(0deg);
-      background: var(--pink);
-    }
-
-    .sector:nth-child(2) {
-      transform: rotate(45deg);
-      background: var(--peach);
-    }
-
-    .sector:nth-child(3) {
-      transform: rotate(90deg);
-      background: var(--mint);
-    }
-
-    .sector:nth-child(4) {
-      transform: rotate(135deg);
-      background: var(--lilac);
-    }
-
-    .sector:nth-child(5) {
-      transform: rotate(180deg);
-      background: var(--yellow);
-    }
-
-    .sector:nth-child(6) {
-      transform: rotate(225deg);
-      background: var(--coral);
-    }
-
-    .sector:nth-child(7) {
-      transform: rotate(270deg);
-      background: var(--sky);
-    }
-
-    .sector:nth-child(8) {
-      transform: rotate(315deg);
-      background: var(--lavender);
-    }
+    .sector:nth-child(1) { transform: rotate(0deg); background: var(--pink); }
+    .sector:nth-child(2) { transform: rotate(45deg); background: var(--peach); }
+    .sector:nth-child(3) { transform: rotate(90deg); background: var(--mint); }
+    .sector:nth-child(4) { transform: rotate(135deg); background: var(--lilac); }
+    .sector:nth-child(5) { transform: rotate(180deg); background: var(--yellow); }
+    .sector:nth-child(6) { transform: rotate(225deg); background: var(--coral); }
+    .sector:nth-child(7) { transform: rotate(270deg); background: var(--sky); }
+    .sector:nth-child(8) { transform: rotate(315deg); background: var(--lavender); }
 
     button {
       margin-top: 2vmin;
@@ -200,7 +146,7 @@
       border-radius: 3vmin;
       cursor: pointer;
       transition: background-color 0.3s;
-      font-family: 'Comic Sans MS';
+      font-family: 'Segoe UI', 'Arial', sans-serif;
       color: #ff4d94;
     }
 
@@ -240,6 +186,7 @@
       color: #ff0000;
       text-align: center;
       z-index: 10;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
     }
 
     .particle {
@@ -266,113 +213,21 @@
       z-index: 30;
     }
 
-    /* Media Queries para pantallas pequeñas */
     @media (max-width: 600px) {
-      h1 {
-        font-size: 4vmin;
-        margin-bottom: 2vmin;
+      #botonReiniciarGanador {
+        top: calc(50% + 45vmin);
       }
+    }
 
-      .ruleta-wrapper {
-        width: 90vmin;
-        height: 90vmin;
-        min-width: 200px;
-        min-height: 200px;
-      }
-
-      .flecha {
-        border-left: 4vmin solid transparent;
-        border-right: 4vmin solid transparent;
-        border-bottom: 6vmin solid red;
-        top: -1vmin;
-      }
-
-      button {
-        padding: 2vmin 3vmin;
-        font-size: 3.5vmin;
-      }
-
-      #imagenResultado {
-        max-width: 50vmin;
-      }
-
-      #mensajeResultado {
-        font-size: 3.5vmin;
-        bottom: 3vmin;
-      }
-
-      .particle {
-        width: 1.5vmin;
-        height: 1.5vmin;
-      }
-
+    @media (min-width: 1200px) {
       #botonReiniciarGanador {
         top: calc(50% + 30vmin);
       }
     }
 
-    /* Media Queries para pantallas grandes */
-    @media (min-width: 1200px) {
-      .ruleta-wrapper {
-        max-width: 500px;
-        max-height: 500px;
-      }
-
-      h1 {
-        font-size: 6vmin;
-      }
-
-      #imagenResultado {
-        max-width: 70vmin;
-      }
-
-      #botonReiniciarGanador {
-        top: calc(50% + 40vmin);
-      }
-    }
-
-    /* Media Query para pantallas estrechas o de alta relación de aspecto */
-    @media (max-aspect-ratio: 1/2) {
-      .ruleta-wrapper {
-        width: 95vw;
-        height: 95vw;
-        min-width: 180px;
-        min-height: 180px;
-      }
-
-      .flecha {
-        border-left: 3.5vmin solid transparent;
-        border-right: 3.5vmin solid transparent;
-        border-bottom: 5.5vmin solid red;
-        top: -0.8vmin;
-      }
-
-      #mensajeResultado {
-        bottom: 2vmin;
-        font-size: 3vmin;
-      }
-    }
-
-    /* Media Query para pantallas de notebook (resoluciones típicas como 1366x768 o 1920x1080) */
     @media (max-height: 800px) and (min-width: 1000px) {
-      .contenedor-juego {
-        min-height: 90vh;
-      }
-
-      .ruleta-wrapper {
-        width: 70vmin;
-        height: 70vmin;
-        max-width: 350px;
-        max-height: 350px;
-      }
-
-      #mensajeResultado {
-        bottom: 4vmin;
-        font-size: 3.5vmin;
-      }
-
-      button {
-        margin-top: 1vmin;
+      #botonReiniciarGanador {
+        top: calc(50% + 30vmin);
       }
     }
   </style>
@@ -476,7 +331,6 @@
           document.getElementById("botonReiniciarGanador").style.display = "inline-block";
           createParticles();
           sonidoGanador.play();
-          document.getElementById("botonReiniciar").style.display = "inline-block";
         } else {
           document.getElementById("mensajeResultado").style.display = "block";
           document.getElementById("botonGirar").style.display = "inline-block";
